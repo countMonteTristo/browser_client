@@ -1,0 +1,49 @@
+body {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+	background-color: #eeeeee;
+}
+#main_container {
+	width: 1366px;
+	margin: 0 auto;
+    text-align: left;
+	background-color: white;
+}
+
+#content_container {
+	width: 100%;
+	height: 100%;
+}
+
+#header {
+	text-align: center;
+}
+
+#input_panel {
+	width: 25%;
+	/* background-color: red; */
+	float: left;
+	
+}
+
+#display_panel {
+	width: 75%;
+	/* background-color: green; */
+	float: left;
+	
+}
+
+#form_table {
+	
+}
+
+.displayed_table {
+	border: 2px solid grey;
+	padding: 2px;
+}
+
+.displayed_table_element {
+	border: 2px solid grey;
+	padding: 5px;
+}

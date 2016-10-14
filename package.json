@@ -1,0 +1,14 @@
+{
+  "name": "webservice_client",
+  "version": "1.0.0",
+  "description": "simple client using express",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tristan.garside@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}

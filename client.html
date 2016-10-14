@@ -1,0 +1,126 @@
+<html><!DOCTYPE html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">			
+ </head>
+<body>
+	<script>
+	
+	var reports_url = 'http://localhost:8080/report';
+	//applicationn data
+	var ids = {};
+	
+	//functions
+	var getAllReports;
+	var addSingleReport;	
+	var deleteSpecifiedReports;
+	
+	$(document).ready(function () {
+    
+		$.getJSON(reports_url, function(json) {
+			getAllReports(json);
+		});
+    });
+	
+	/** Function definitions **************************************************************/
+	
+	getAllReports = function(json) {
+		var tr;
+        for (var i = 0; i < json.length; i++) {
+            tr = $('<tr>');
+            tr.append("<td class='displayed_table_element'>" + json[i].longitude + "</td>");
+            tr.append("<td class='displayed_table_element'>" + json[i].latitude + "</td>");
+            tr.append("<td class='displayed_table_element'>" + json[i].timestamp + "</td>");
+			if (json[i].altitude) { 
+				tr.append("<td class='displayed_table_element'>" + json[i].altitude + "</td>" );
+			} else {
+				tr.append("<td class='displayed_table_element'>-</td>" );
+			}
+			if (json[i].accuracy) { 
+				tr.append("<td class='displayed_table_element'>" + json[i].accuracy + "</td>" );
+			} else {
+				tr.append("<td class='displayed_table_element'>-</td>" );
+			}
+			tr.append("<td class='displayed_table_element'>" + json[i]._id + "</td>");
+			//add id to application state
+			
+			tr.append("<td class='displayed_table_element'><input type='checkbox' id='cb_" + json[i]._id + "'/></td>");
+            tr.append("</tr>");
+			$('#data_table').append(tr);
+        }
+		$('#data_table').append("<tr><td></td><td></td><td></td><td></td><td></td><td></td>" +
+								"<td><input type='button' value='delete selected' onClick='deleteSpecifiedReports()'/></td>");
+        
+	} 
+	
+	addSingleReport = function() {
+		console.log('addSingReport() invoked');
+		var _longitude = $('#longitude_input').val();
+		var _latitude = $('#latitude_input').val();
+		var _timestamp = $('#timestamp_input').val();
+		var _altitude = $('#altitude_input').val();
+		var _accuracy = $('#accuracy_input').val();
+		
+		var data = {
+			"longitude": _longitude,
+			"latitude":	_latitude,
+			"timestamp": _timestamp,
+			"altitude":	_altitude,
+			"accuracy":	_accuracy
+		}
+		console.log(data);
+		$.post(reports_url, data, 'json');
+	};
+	
+	deleteSpecifiedReports = function() {
+		var rowCount = $('#data_table tr').length - 1 //One row is for delete button itself
+		console.log(document.getElementById(data_table).rows[0]);
+		var toDelete = [];
+		console.log(rowCount);
+		for(var i=0; i<rowCount; i++) {
+			
+			//var extractedID = $('#)
+			//if ()
+		}
+	};
+
+	
+	</script>	
+	<div id="main_container">
+	<div id="header">
+		<h1> Simple RESTful client</h1>
+	</div>
+	<div id="content_container">	
+		<div id="input_panel">
+			<form id="post_form">
+			<table id="form_table">
+				<tr><td>longitude:</td><td><input type="text" id="longitude_input"/></td></tr>
+				<tr><td>latitude:</td><td><input type="text" id="latitude_input"/></td></tr>
+				<tr><td>timestamp:</td><td><input type="text" id="timestamp_input"/></td></tr>
+				<tr><td>altitude:</td><td><input type="text" id="altitude_input"/></td></tr>
+				<tr><td>accuracy:</td><td><input type="text" id="accuracy_input"/></td></tr>
+				<tr><td></td><td><input type="button" value="Add single report" onClick="addSingleReport()"/></tr><td>
+			</table>
+			</form>
+		</div>
+		
+		<div id="display_panel">
+			<table id="data_table" class="displayed_table">
+			<tr>
+				<th class="displayed_table_element">longitude</th>
+				<th class="displayed_table_element">latitude</th>
+				<th class="displayed_table_element" >timestamp</th>
+				<th class="displayed_table_element">altitude</th>
+				<th class="displayed_table_element">accuracy</th>
+				<th class="displayed_table_element">ID</th>
+				<th class="displayed_table_element">DELETE</th>
+			</tr>
+			</table>
+		</div>
+	</div>	
+	</div>	
+</body>
+</html>
