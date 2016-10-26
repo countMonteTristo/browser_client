@@ -1,21 +1,23 @@
 var main = function() {
+var reports_url = 'http://localhost:8080/report';
+//applicationn data
+var ids = {};
 
-  var reports_url = 'http://localhost:8080/report';
-  //applicationn data
-  var ids = {};
+//functions
+var updateDisplay
+var getAllReports;
+var addSingleReport;
+var deleteSpecifiedReports;
 
-  //functions
-  var getAllReports;
-  var addSingleReport;
-  var deleteSpecifiedReports;
+updateDisplay = function() {
+  $('#display_panel').empty();
+  getAllReports();
+};
 
+/** Function definitions **************************************************************/
+
+getAllReports = function() {
   $.getJSON(reports_url, function(json) {
-      getAllReports(json);
-  });
-
-  /** Function definitions **************************************************************/
-
-  getAllReports = function(json) {
     var tr;
         for (var i = 0; i < json.length; i++) {
             tr = $('<tr>');
@@ -42,7 +44,8 @@ var main = function() {
     $('#data_table').append("<tr><td></td><td></td><td></td><td></td><td></td><td></td>" +
                 "<td><input type='button' value='delete selected' onClick='deleteSpecifiedReports()'/></td>");
 
-  }
+  });
+};
 
 addSingleReport = function() {
   console.log('addSingReport() invoked');
@@ -61,19 +64,26 @@ addSingleReport = function() {
   }
   console.log(data);
   $.post(reports_url, data, 'json');
+
+  updateDisplay();
 };
 
-  deleteSpecifiedReports = function() {
-    var rowCount = $('#data_table tr').length - 1 //One row is for delete button itself
-    console.log(document.getElementById(data_table).rows[0]);
-    var toDelete = [];
-    console.log(rowCount);
-    for(var i=0; i<rowCount; i++) {
+deleteSpecifiedReports = function() {
+  var rowCount = $('#data_table tr').length - 1 //One row is for delete button itself
+  console.log(document.getElementById(data_table).rows[0]);
+  var toDelete = [];
+  console.log(rowCount);
+  for(var i=0; i<rowCount; i++) {
 
-      //var extractedID = $('#)
-      //if ()
-    }
+    //var extractedID = $('#)
+    //if ()
+  }
   };
+
+  //add lsiteners
+  $('#add_report_btn').on('click', addSingleReport);
+  getAllReports();
+
 };
 
 $(document).ready(main);
