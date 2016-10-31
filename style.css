@@ -31,7 +31,10 @@ body {
 	width: 75%;
 	/* background-color: green; */
 	float: left;
-	
+}
+
+#delete_report_btn {
+	float: right;
 }
 
 #form_table {

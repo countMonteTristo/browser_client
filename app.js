@@ -74,12 +74,12 @@ var main = function() {
         tr.append("</tr>");
         $('#data_table').append(tr);
         }
-        $('#data_table').append("<tr><td></td><td></td><td></td><td></td><td></td><td></td>" +
-                  "<td><input type='button' value='delete selected' id='delete_report_btn'/></td>");
+        //$('#data_table').append("<tr><td></td><td></td><td></td><td></td><td></td><td></td>" +
+         //         "<td><input type='button' value='delete selected' id='delete_report_btn'/></td>");
         //console.log(json);
         //console.log(ids);
-
       });
+	 //$('#display-panel').append('')
   };
 
   addSingleReport = function() {
@@ -119,13 +119,15 @@ var main = function() {
 
 
   //on main called populate display
-  updateDisplay();
   //deleteSpecifiedReports();
-
-  //add lsiteners
   $('#add_report_btn').on('click', addSingleReport);
-  $('#delete_report_btn').on('click', alert('heard'));
-
+  $('#delete_report_btn').on('click', deleteSpecifiedReports);
+  console.log($('#delete_report_btn'));
+  updateDisplay();
+  
+  //add lsiteners
+  
+  
 
   //console.log(ids);
 };
