@@ -1,22 +1,37 @@
 var main = function() {
-var reports_url = 'http://localhost:8080/report';
-//applicationn data
-var ids = {};
+  var reports_url = 'http://localhost:8080/report';
+  //applicationn data
+  var ids = [];
 
-//functions
-var updateDisplay
-var getAllReports;
-var addSingleReport;
-var deleteSpecifiedReports;
+  //functions
+  var updateDisplay
+  var getAllReports;
+  var addSingleReport;
+  var deleteSpecifiedReports;
 
-updateDisplay = function() {
-  $('#display_panel').empty();
-  getAllReports();
-};
+  updateDisplay = function() {
+    $('#display-panel').empty();
+    getAllReports();
+  };
 
 /** Function definitions **************************************************************/
 
 getAllReports = function() {
+  //Write the headers
+  var table_headers =
+  '<table id="data_table" class="displayed_table">' +
+      '<tr>' +
+        '<th class="displayed_table_element">longitude</th>' +
+        '<th class="displayed_table_element">latitude</th>' +
+        '<th class="displayed_table_element" >timestamp</th>' +
+        '<th class="displayed_table_element">altitude</th>' +
+        '<th class="displayed_table_element">accuracy</th>' +
+        '<th class="displayed_table_element">ID</th>' +
+        '<th class="displayed_table_element">DELETE</th>' +
+        '</tr>' +
+      '</table>';
+  $('#display-panel').append(table_headers);
+  //Append the data from JSON
   $.getJSON(reports_url, function(json) {
     var tr;
         for (var i = 0; i < json.length; i++) {
@@ -36,13 +51,14 @@ getAllReports = function() {
       }
       tr.append("<td class='displayed_table_element'>" + json[i]._id + "</td>");
       //add id to application state
+      ids.push(json[i]._id);
 
       tr.append("<td class='displayed_table_element'><input type='checkbox' id='cb_" + json[i]._id + "'/></td>");
             tr.append("</tr>");
       $('#data_table').append(tr);
         }
     $('#data_table').append("<tr><td></td><td></td><td></td><td></td><td></td><td></td>" +
-                "<td><input type='button' value='delete selected' onClick='deleteSpecifiedReports()'/></td>");
+                "<td><input type='button' value='delete selected' id='delete_report_btn'/></td>");
 
   });
 };
@@ -68,21 +84,21 @@ addSingleReport = function() {
   updateDisplay();
 };
 
-deleteSpecifiedReports = function() {
-  var rowCount = $('#data_table tr').length - 1 //One row is for delete button itself
-  console.log(document.getElementById(data_table).rows[0]);
-  var toDelete = [];
-  console.log(rowCount);
-  for(var i=0; i<rowCount; i++) {
-
-    //var extractedID = $('#)
-    //if ()
-  }
+  deleteSpecifiedReports = function() {
+    console.log('delete event heard');
+    deletion_url = reports_url + '/' + ids[0];
+    $.delete(deletion_url);
   };
+
+  //on main called populate display
+  updateDisplay();
 
   //add lsiteners
   $('#add_report_btn').on('click', addSingleReport);
-  getAllReports();
+  $('#delete_report_btn').on('click', deleteSpecifiedReports);
+
+  console.log(ids);
+
 
 };
 
