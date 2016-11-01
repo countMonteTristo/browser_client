@@ -39,7 +39,7 @@ var main = function() {
   getAllReports = function() {
     //Write the headers
     var table_headers =
-    '<table id="data_table" class="displayed_table">' +
+    '<table id="data_table" class="displayed_table" style="float: right">' +
         '<tr>' +
           '<th class="displayed_table_element">longitude</th>' +
           '<th class="displayed_table_element">latitude</th>' +
@@ -74,12 +74,7 @@ var main = function() {
         tr.append("</tr>");
         $('#data_table').append(tr);
         }
-        //$('#data_table').append("<tr><td></td><td></td><td></td><td></td><td></td><td></td>" +
-         //         "<td><input type='button' value='delete selected' id='delete_report_btn'/></td>");
-        //console.log(json);
-        //console.log(ids);
       });
-	 //$('#display-panel').append('')
   };
 
   addSingleReport = function() {
@@ -106,15 +101,11 @@ var main = function() {
 
   deleteSpecifiedReports = function() {
     console.log('delete event heard');
-    var row_to_delete = 1;
+    var rows_to_delete = [];
+
     var id_to_delete = $('#row' + row_to_delete + ' td:nth-child(6)').text();
 
     console.log(id_to_delete);
-    //deletion_url = reports_url + '/' + ;
-    //console.log(deletion_url);
-
-    //$.delete(deletion_url);
-    //updateDisplay();
   };
 
 
@@ -122,12 +113,11 @@ var main = function() {
   //deleteSpecifiedReports();
   $('#add_report_btn').on('click', addSingleReport);
   $('#delete_report_btn').on('click', deleteSpecifiedReports);
-  console.log($('#delete_report_btn'));
   updateDisplay();
-  
+
   //add lsiteners
-  
-  
+
+
 
   //console.log(ids);
 };

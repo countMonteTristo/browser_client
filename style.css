@@ -1,52 +1,78 @@
 body {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-	background-color: #eeeeee;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+	background: #9DB6CF;
 }
+
+#header {
+  background: #C2E1FF;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
 #main_container {
-	width: 1366px;
+	width: 1150px;
 	margin: 0 auto;
-    text-align: left;
-	background-color: white;
+  text-align: left;
+	background-color: #C2E1FF;
 }
 
 #content_container {
 	width: 100%;
-	height: 100%;
+  /*background-color: #C2E1FF;*/
 }
 
-#header {
-	text-align: center;
+#left-panel {
+  width: 25%;
+  height: 100%;
+  background: #C2E1FF;
+  float: left;
+  text-align: center;
 }
 
-#input_panel {
-	width: 25%;
-	/* background-color: red; */
-	float: left;
-	
+#left-panel table {
+  margin: 20px;
+  margin-left: 40px;
 }
 
-#display_panel {
-	width: 75%;
-	/* background-color: green; */
-	float: left;
+#right-panel {
+  width: 75%;
+  height: 100%;
+  background: #C2E1FF;
+  float: right;
 }
 
+#display-panel table {
+  margin: 20px;
+  margin-right: 40px;
+}
+
+#display-panel-controls {
+  padding-right: 40px;
+  width: 75%;
+	float: right;
+}
 #delete_report_btn {
 	float: right;
 }
 
 #form_table {
-	
+
 }
 
 .displayed_table {
 	border: 2px solid grey;
 	padding: 2px;
+  background: white;
 }
 
 .displayed_table_element {
 	border: 2px solid grey;
 	padding: 5px;
+}
+
+h1, h2, h3, h4, h5, p, th {
+  font-family: sans-serif;
 }

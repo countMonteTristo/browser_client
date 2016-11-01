@@ -9,10 +9,12 @@
 <body>
 	<div id="main_container">
 	<div id="header">
-		<h1> Simple RESTful client</h1>
+		<h1> Basic client for RESTful service</h1>
+		<hr/>
 	</div>
 	<div id="content_container">
-		<div id="input_panel">
+		<div id="left-panel">
+			<h3>Input geodata</h3>
 			<form id="post_form">
 			<table id="form_table">
 				<tr><td>longitude:</td><td><input type="text" id="longitude_input"/></td></tr>
@@ -24,11 +26,14 @@
 			</table>
 			</form>
 		</div>
-
-		<div id="display-panel">
-			<!-- data added here in app.js -->
+		<div id="right-panel">
+			<div id="display-panel">
+				<!-- data added here in app.js -->
+			</div>
+			<div id="display-panel-controls">
+				<input type="button" value="delete selected" id="delete_report_btn"/>
+			</div>
 		</div>
-		<input type="button" value="delete selected" id="delete_report_btn"/>
 	</div>
 	</div>
 	<script   src="https://code.jquery.com/jquery-2.2.4.min.js"
