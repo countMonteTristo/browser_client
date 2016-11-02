@@ -1,7 +1,8 @@
 var main = function() {
 
-  /* add custom made PUT and DELETE http verbs as shortcut methods
-    from: http://stepansuvorov.com/blog/2014/04/jquery-put-and-delete/
+  /*************************************************************************/
+  /*  add custom made PUT and DELETE http verbs as shortcut methods
+      from: http://stepansuvorov.com/blog/2014/04/jquery-put-and-delete/
   */
   jQuery.each( [ "put", "delete" ], function( i, method ) {
     jQuery[ method ] = function( url, data, callback, type ) {
@@ -21,6 +22,8 @@ var main = function() {
     };
   });
 
+  /*********************************************************************/
+
   var reports_url = 'http://localhost:8080/report';
 
   //functions
@@ -30,28 +33,28 @@ var main = function() {
   var deleteSpecifiedReports;
 
   updateDisplay = function() {
-    $('#display-panel').empty();
+    //$('#display-panel td').empty();
     getAllReports();
   };
 
-/** Function definitions **************************************************************/
+/** Function definitions ***************************************************/
 
   getAllReports = function() {
     //Write the headers
-    var table_headers =
-    '<table id="data_table" class="displayed_table" style="float: right">' +
-        '<tr>' +
-          '<th class="displayed_table_element">longitude</th>' +
-          '<th class="displayed_table_element">latitude</th>' +
-          '<th class="displayed_table_element" >timestamp</th>' +
-          '<th class="displayed_table_element">altitude</th>' +
-          '<th class="displayed_table_element">accuracy</th>' +
-          '<th class="displayed_table_element">ID</th>' +
-          '<th class="displayed_table_element">DELETE</th>' +
-          '</tr>' +
-        '</table>';
-    $('#display-panel').append(table_headers);
-    //Append the data from JSON
+    // var table_headers =
+    // '<table id="data_table" class="displayed_table" style="float: right">' +
+    //     '<tr>' +
+    //       '<th class="displayed_table_element">longitude</th>' +
+    //       '<th class="displayed_table_element">latitude</th>' +
+    //       '<th class="displayed_table_element" >timestamp</th>' +
+    //       '<th class="displayed_table_element">altitude</th>' +
+    //       '<th class="displayed_table_element">accuracy</th>' +
+    //       '<th class="displayed_table_element">ID</th>' +
+    //       '<th class="displayed_table_element">DELETE</th>' +
+    //       '</tr>' +
+    //     '</table>';
+    // $('#display-panel').append(table_headers);
+    // //Append the data from JSON
     $.getJSON(reports_url, function(json) {
       var tr;
           for (var i = 0; i < json.length; i++) {
@@ -59,23 +62,25 @@ var main = function() {
               tr.append("<td class='displayed_table_element'>" + json[i].longitude + "</td>");
               tr.append("<td class='displayed_table_element'>" + json[i].latitude + "</td>");
               tr.append("<td class='displayed_table_element'>" + json[i].timestamp + "</td>");
-        if (json[i].altitude) {
-          tr.append("<td class='displayed_table_element'>" + json[i].altitude + "</td>" );
-        } else {
-          tr.append("<td class='displayed_table_element'>-</td>" );
-        }
-        if (json[i].accuracy) {
-          tr.append("<td class='displayed_table_element'>" + json[i].accuracy + "</td>" );
-        } else {
-          tr.append("<td class='displayed_table_element'>-</td>" );
-        }
-        tr.append("<td class='displayed_table_element'>" + json[i]._id + "</td>");
-        tr.append("<td class='displayed_table_element'><input type='checkbox' id='cb_" + json[i]._id + "'/></td>");
-        tr.append("</tr>");
-        $('#data_table').append(tr);
-        }
+
+          if (json[i].altitude) {
+            tr.append("<td class='displayed_table_element'>" + json[i].altitude + "</td>" );
+          } else {
+            tr.append("<td class='displayed_table_element'>-</td>" );
+          };
+          if (json[i].accuracy) {
+            tr.append("<td class='displayed_table_element'>" + json[i].accuracy + "</td>" );
+          } else {
+            tr.append("<td class='displayed_table_element'>-</td>" );
+          };
+          tr.append("<td class='id-field'>" + json[i]._id + "</td>");
+          tr.append("<td class='displayed_table_element'><input type='checkbox'" + "'/></td>");
+          tr.append("</tr>");
+        };
+        $('#data_table tbody:last-child').append(tr);
       });
-  };
+    };
+
 
   addSingleReport = function() {
     console.log('addSingReport() invoked');
@@ -99,27 +104,37 @@ var main = function() {
     updateDisplay();
   };
 
+
   deleteSpecifiedReports = function() {
     console.log('delete event heard');
-    var rows_to_delete = [];
 
-    var id_to_delete = $('#row' + row_to_delete + ' td:nth-child(6)').text();
+    //Get the indexes of the checked checkboxes in the DELETE column
+    var rowIndexesForDeletion = [];
+    var checkboxes = $('#data_table tr td input');
+    for(var i=0; i < checkboxes.length; i++) {
+      if($(checkboxes[i]).is(':checked')){
+          rowIndexesForDeletion.push(i);
+      }
+    }
+    //Using these indexes get the relevent _id strings
+    var idsForDeletion = []
+    var ids = $(('.id-field')).slice();
+    for (var i=0; i < rowIndexesForDeletion.length; i++) {
+      idsForDeletion.push(ids[rowIndexesForDeletion[i]].innerHTML);
+    }
 
-    console.log(id_to_delete);
+    //TODO delete need some kind of security in header to be accepted
+    // updateDisplay provided as callback on done, but needs a tweek
+    for(var i=0; i<idsForDeletion.length; i++) {
+      $.delete(reports_url + '/' + idsForDeletion[i], updateDisplay);
+    }
   };
 
-
-  //on main called populate display
-  //deleteSpecifiedReports();
+  //add lsiteners
   $('#add_report_btn').on('click', addSingleReport);
   $('#delete_report_btn').on('click', deleteSpecifiedReports);
+
   updateDisplay();
-
-  //add lsiteners
-
-
-
-  //console.log(ids);
 };
 
 $(document).ready(main);

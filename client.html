@@ -9,7 +9,7 @@
 <body>
 	<div id="main_container">
 	<div id="header">
-		<h1> Basic client for RESTful service</h1>
+		<h1> Basic client for RESTful geodata service</h1>
 		<hr/>
 	</div>
 	<div id="content_container">
@@ -28,7 +28,19 @@
 		</div>
 		<div id="right-panel">
 			<div id="display-panel">
-				<!-- data added here in app.js -->
+				<table id="data_table" class="displayed_table" style="float: right">
+					<tbody>
+					<tr>
+	      		<th class="displayed_table_element">longitude</th>
+	          <th class="displayed_table_element">latitude</th>
+	          <th class="displayed_table_element" >timestamp</th>
+	          <th class="displayed_table_element">altitude</th>
+	          <th class="displayed_table_element">accuracy</th>
+	          <th class="displayed_table_element">ID</th>
+	          <th class="displayed_table_element">DELETE</th>
+	        </tr>
+				</tbody>
+				</table>
 			</div>
 			<div id="display-panel-controls">
 				<input type="button" value="delete selected" id="delete_report_btn"/>

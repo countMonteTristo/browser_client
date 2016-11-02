@@ -62,6 +62,11 @@ body {
 
 }
 
+#data_table th td {
+  border: 2px solid black;
+	padding: 5px;
+
+}
 .displayed_table {
 	border: 2px solid grey;
 	padding: 2px;
